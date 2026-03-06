@@ -1,469 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AKWAN Cie</title>
+  <meta
+    name="description"
+    content="AKWAN Cie is a private holding structure focused on strategic investment, selective brand vision and high-value project development."
+  />
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
     :root {
-      --bg-1: #010101;
-      --bg-2: #040608;
-      --bg-3: #090b0f;
-      --white: #ffffff;
-      --silver: rgba(255, 255, 255, 0.84);
-      --muted: rgba(255, 255, 255, 0.58);
-      --soft: rgba(255, 255, 255, 0.34);
-      --line: rgba(255, 255, 255, 0.10);
-      --blue-glow: rgba(170, 205, 255, 0.14);
-      --white-glow: rgba(255, 255, 255, 0.18);
+      --bg: #05070b;
+      --bg-2: #0a0f18;
+      --text: #f4f4f5;
+      --muted: rgba(255, 255, 255, 0.72);
+      --soft: rgba(255, 255, 255, 0.38);
+      --line: rgba(255, 255, 255, 0.08);
+      --accent-1: rgba(255, 79, 140, 0.28);
+      --accent-2: rgba(120, 62, 255, 0.26);
+      --accent-3: rgba(255, 255, 255, 0.09);
+      --panel: rgba(255, 255, 255, 0.03);
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
     }
 
     * {
       box-sizing: border-box;
-      cursor: none;
     }
 
-    html,
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      padding: 0;
-      min-height: 100%;
-      background: #000;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      color: var(--white);
-      overflow: hidden;
       min-height: 100vh;
-      position: relative;
+      font-family: "Inter", sans-serif;
+      color: var(--text);
       background:
-        radial-gradient(circle at 50% 14%, rgba(255, 255, 255, 0.10), transparent 18%),
-        radial-gradient(circle at 18% 82%, rgba(150, 190, 255, 0.05), transparent 26%),
-        radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.04), transparent 22%),
-        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
-      opacity: 0;
-      animation: pageFade 1.5s ease forwards;
+        radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.08), transparent 18%),
+        radial-gradient(circle at 50% 30%, var(--accent-1), transparent 22%),
+        radial-gradient(circle at 58% 28%, var(--accent-2), transparent 20%),
+        linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+      overflow-x: hidden;
     }
 
-    .preloader {
+    body::before {
+      content: "";
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, #07090d 0%, #010101 70%);
-      z-index: 9999;
+      background:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 120px 120px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 32%);
+      pointer-events: none;
+      filter: blur(24px);
+      opacity: 0.7;
+      animation: pulseGlow 6s ease-in-out infinite;
+    }
+
+    .wrap {
+      position: relative;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 28px 22px 50px;
+      min-height: 100vh;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-      animation: preloaderFade 1.6s ease forwards;
-      animation-delay: 1.2s;
     }
 
-    .preloader-mark {
-      font-size: 14px;
-      letter-spacing: 0.5em;
+    .topline {
+      text-align: center;
+      font-size: 0.76rem;
+      letter-spacing: 0.42em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.62);
-      animation: preloaderPulse 1.2s ease-in-out infinite;
-    }
-
-    .noise {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.04;
-      mix-blend-mode: soft-light;
-      background-image:
-        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.35) 0.5px, transparent 0.8px),
-        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.25) 0.5px, transparent 0.8px),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.16) 0.4px, transparent 0.7px);
-      background-size: 26px 26px, 34px 34px, 19px 19px;
-    }
-
-    .orb-1,
-    .orb-2,
-    .orb-3 {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(34px);
-    }
-
-    .orb-1 {
-      width: 1200px;
-      height: 1200px;
-      left: 50%;
-      top: 42%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle,
-          rgba(255, 255, 255, 0.13) 0%,
-          rgba(170, 205, 255, 0.06) 18%,
-          rgba(255, 255, 255, 0.03) 36%,
-          rgba(255, 255, 255, 0) 64%);
-      animation: pulseHuge 8s ease-in-out infinite;
-    }
-
-    .orb-2 {
-      width: 720px;
-      height: 720px;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle,
-          rgba(170, 205, 255, 0.10) 0%,
-          rgba(255, 255, 255, 0.045) 28%,
-          rgba(255, 255, 255, 0) 70%);
-      animation: pulseSoft 6.5s ease-in-out infinite;
-    }
-
-    .orb-3 {
-      width: 380px;
-      height: 380px;
-      left: 50%;
-      top: 49%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle,
-          rgba(255, 255, 255, 0.12) 0%,
-          rgba(170, 205, 255, 0.04) 36%,
-          rgba(255, 255, 255, 0) 74%);
-      animation: pulseCore 5.5s ease-in-out infinite;
-    }
-
-    .top-line,
-    .bottom-line {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(88vw, 1220px);
-      height: 1px;
-      z-index: 2;
-      pointer-events: none;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255,255,255,0.04) 15%,
-        rgba(255,255,255,0.16) 50%,
-        rgba(255,255,255,0.04) 85%,
-        transparent 100%
-      );
-    }
-
-    .top-line {
-      top: 8vh;
-    }
-
-    .bottom-line {
-      bottom: 8vh;
-    }
-
-    .left-line,
-    .right-line {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: min(72vh, 780px);
-      z-index: 2;
-      pointer-events: none;
-      background: linear-gradient(
-        180deg,
-        transparent 0%,
-        rgba(255,255,255,0.04) 14%,
-        rgba(255,255,255,0.16) 50%,
-        rgba(255,255,255,0.04) 86%,
-        transparent 100%
-      );
-    }
-
-    .left-line {
-      left: 7vw;
-    }
-
-    .right-line {
-      right: 7vw;
+      color: var(--soft);
+      margin-bottom: 18px;
+      animation: fadeUp 1.1s ease forwards;
+      opacity: 0;
     }
 
     .hero {
       position: relative;
-      z-index: 3;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 34px 20px;
-    }
-
-    .content {
-      width: min(95vw, 1260px);
       text-align: center;
+      padding: 10px 0 24px;
+    }
+
+    .logo-frame {
       position: relative;
-    }
-
-    .center-glow {
-      position: absolute;
-      left: 50%;
-      top: 49%;
-      transform: translate(-50%, -50%);
-      width: min(80vw, 980px);
-      height: 470px;
-      border-radius: 50%;
-      z-index: -1;
-      background: radial-gradient(circle,
-          rgba(255,255,255,0.10) 0%,
-          rgba(170,205,255,0.05) 28%,
-          rgba(255,255,255,0.02) 44%,
-          rgba(255,255,255,0) 74%);
-      filter: blur(36px);
-      animation: contentPulse 6s ease-in-out infinite;
-    }
-
-    .eyebrow {
-      margin: 0 0 22px 0;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.42);
+      width: min(430px, 82vw);
+      margin: 0 auto 26px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      animation: fadeUp 1.1s ease 0.15s forwards;
       opacity: 0;
-      animation: riseIn 0.9s ease forwards;
-      animation-delay: 1.2s;
     }
 
-    .logo-shell {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 30px;
-      opacity: 0;
-      animation: riseIn 1s ease forwards;
-      animation-delay: 1.45s;
-    }
-
-    .logo-shell::before {
+    .logo-frame::before {
       content: "";
       position: absolute;
-      width: 540px;
-      height: 540px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle,
-          rgba(255,255,255,0.15) 0%,
-          rgba(170,205,255,0.08) 18%,
-          rgba(255,255,255,0.03) 35%,
-          rgba(255,255,255,0) 70%);
-      filter: blur(20px);
-      animation: haloSpin 18s linear infinite, haloBreath 6s ease-in-out infinite;
-      z-index: -1;
+      inset: -1px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      pointer-events: none;
     }
 
-    .logo-shell::after {
-      content: "";
-      position: absolute;
-      width: 460px;
-      height: 460px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow:
-        0 0 34px rgba(255,255,255,0.04),
-        inset 0 0 30px rgba(255,255,255,0.02);
-      animation: ringPulse 6s ease-in-out infinite;
-      z-index: -1;
-    }
-
-    .logo {
-      width: min(500px, 84vw);
-      max-width: 500px;
-      min-width: 230px;
-      height: auto;
+    .logo-frame img {
       display: block;
-      filter:
-        drop-shadow(0 0 18px rgba(255,255,255,0.15))
-        drop-shadow(0 0 60px rgba(170,205,255,0.12));
-      animation: logoFloat 5.2s ease-in-out infinite;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      background: #07070b;
     }
 
-    h1 {
+    .wordmark {
       margin: 0;
-      font-size: clamp(48px, 9vw, 118px);
+      font-size: clamp(3.2rem, 9vw, 8rem);
       line-height: 0.95;
-      font-weight: 900;
-      letter-spacing: 0.26em;
+      letter-spacing: 0.22em;
+      font-weight: 800;
       text-transform: uppercase;
-      text-shadow:
-        0 0 16px rgba(255,255,255,0.10),
-        0 0 42px rgba(170,205,255,0.06);
-    }
-
-    .title-reveal {
-      display: inline-block;
-      white-space: nowrap;
-    }
-
-    .title-reveal span {
-      display: inline-block;
+      animation: fadeUp 1.1s ease 0.3s forwards;
       opacity: 0;
-      transform: translateY(12px);
-      animation: letterIn 0.65s ease forwards;
-    }
-
-    .title-reveal span:nth-child(1) { animation-delay: 1.7s; }
-    .title-reveal span:nth-child(2) { animation-delay: 1.78s; }
-    .title-reveal span:nth-child(3) { animation-delay: 1.86s; }
-    .title-reveal span:nth-child(4) { animation-delay: 1.94s; }
-    .title-reveal span:nth-child(5) { animation-delay: 2.02s; }
-    .title-reveal span:nth-child(6) { animation-delay: 2.10s; }
-    .title-reveal span:nth-child(7) { animation-delay: 2.18s; }
-    .title-reveal span:nth-child(8) { animation-delay: 2.26s; }
-    .title-reveal span:nth-child(9) { animation-delay: 2.34s; }
-
-    .divider {
-      width: min(220px, 42vw);
-      height: 1px;
-      margin: 28px auto 30px auto;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255,255,255,0.18) 50%,
-        transparent 100%
-      );
-      opacity: 0;
-      animation: fadeIn 0.9s ease forwards;
-      animation-delay: 2.55s;
+      text-shadow: 0 0 22px rgba(255,255,255,0.08);
     }
 
     .subtitle {
-      max-width: 980px;
-      margin: 0 auto;
-      font-size: clamp(18px, 2vw, 31px);
-      line-height: 1.55;
-      font-weight: 400;
-      color: var(--silver);
-      opacity: 0;
-      animation: riseIn 1s ease forwards;
-      animation-delay: 2.7s;
-    }
-
-    .location {
-      margin: 24px 0 0 0;
-      font-size: clamp(14px, 1.4vw, 20px);
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      max-width: 1040px;
+      margin: 28px auto 0;
+      font-size: clamp(1.1rem, 2.1vw, 1.8rem);
+      line-height: 1.5;
       color: var(--muted);
+      font-weight: 400;
+      animation: fadeUp 1.1s ease 0.45s forwards;
       opacity: 0;
-      animation: riseIn 1s ease forwards;
-      animation-delay: 2.9s;
     }
 
-    .manifesto {
-      max-width: 860px;
-      margin: 52px auto 0 auto;
-      font-size: clamp(13px, 1.08vw, 16px);
-      line-height: 1.95;
-      letter-spacing: 0.04em;
-      color: rgba(255,255,255,0.34);
-      opacity: 0;
-      animation: riseIn 1s ease forwards;
-      animation-delay: 3.1s;
-    }
-
-    .signature {
-      margin: 46px 0 0 0;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.42);
-      opacity: 0;
-      animation: riseIn 1s ease forwards;
-      animation-delay: 3.3s;
-    }
-
-    .bottom-mark {
-      position: fixed;
-      left: 50%;
-      bottom: 22px;
-      transform: translateX(-50%);
-      z-index: 4;
-      font-size: 10px;
-      font-weight: 600;
+    .tagline {
+      margin: 28px 0 0;
+      font-size: clamp(0.95rem, 1.45vw, 1.25rem);
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.20);
-      pointer-events: none;
+      color: rgba(255,255,255,0.68);
+      font-weight: 700;
+      animation: fadeUp 1.1s ease 0.6s forwards;
       opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 3.5s;
     }
 
-    .cursor-dot,
-    .cursor-ring {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10000;
+    .description {
+      max-width: 980px;
+      margin: 34px auto 0;
+      font-size: clamp(0.98rem, 1.35vw, 1.22rem);
+      line-height: 1.8;
+      color: rgba(255,255,255,0.42);
+      animation: fadeUp 1.1s ease 0.75s forwards;
+      opacity: 0;
     }
 
-    .cursor-dot {
-      width: 8px;
-      height: 8px;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 0 18px rgba(170,205,255,0.55);
+    .actions {
+      margin-top: 34px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 1.1s ease 0.9s forwards;
+      opacity: 0;
     }
 
-    .cursor-ring {
-      width: 34px;
-      height: 34px;
-      border: 1px solid rgba(255,255,255,0.26);
-      box-shadow:
-        0 0 18px rgba(170,205,255,0.18),
-        inset 0 0 12px rgba(255,255,255,0.04);
-      transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+      padding: 15px 22px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.92rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+      backdrop-filter: blur(10px);
     }
 
-    @keyframes preloaderFade {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.18);
     }
 
-    @keyframes preloaderPulse {
-      0%, 100% {
-        opacity: 0.45;
-        transform: scale(1);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.04);
-      }
+    .btn-primary {
+      background: rgba(255,255,255,0.06);
     }
 
-    @keyframes pageFade {
-      to {
-        opacity: 1;
-      }
+    .btn-secondary {
+      background: transparent;
+      color: rgba(255,255,255,0.82);
     }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+    .footer-note {
+      margin-top: 46px;
+      text-align: center;
+      color: rgba(255,255,255,0.28);
+      font-size: 0.86rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      animation: fadeUp 1.1s ease 1.05s forwards;
+      opacity: 0;
     }
 
-    @keyframes riseIn {
+    @keyframes fadeUp {
       from {
         opacity: 0;
-        transform: translateY(12px);
+        transform: translateY(18px);
       }
       to {
         opacity: 1;
@@ -471,262 +240,84 @@
       }
     }
 
-    @keyframes letterIn {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-        filter: blur(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-      }
-    }
-
-    @keyframes logoFloat {
+    @keyframes pulseGlow {
       0%, 100% {
-        transform: translateY(0px) scale(1);
-      }
-      50% {
-        transform: translateY(-10px) scale(1.018);
-      }
-    }
-
-    @keyframes haloSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes haloBreath {
-      0%, 100% { opacity: 0.84; }
-      50% { opacity: 1; }
-    }
-
-    @keyframes ringPulse {
-      0%, 100% {
-        opacity: 0.76;
+        opacity: 0.55;
         transform: scale(1);
       }
       50% {
-        opacity: 1;
-        transform: scale(1.035);
-      }
-    }
-
-    @keyframes pulseHuge {
-      0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.92;
-      }
-      50% {
-        transform: translate(-50%, -50%) scale(1.06);
-        opacity: 1;
-      }
-    }
-
-    @keyframes pulseSoft {
-      0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
         opacity: 0.82;
-      }
-      50% {
-        transform: translate(-50%, -50%) scale(1.045);
-        opacity: 1;
+        transform: scale(1.03);
       }
     }
 
-    @keyframes pulseCore {
-      0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.82;
-      }
-      50% {
-        transform: translate(-50%, -50%) scale(1.08);
-        opacity: 1;
-      }
-    }
-
-    @keyframes contentPulse {
-      0%, 100% {
-        opacity: 0.86;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.05);
-      }
-    }
-
-    @media (max-width: 920px) {
-      .left-line,
-      .right-line {
-        display: none;
+    @media (max-width: 768px) {
+      .wrap {
+        padding-top: 22px;
+        padding-bottom: 36px;
       }
 
-      .logo-shell::before {
-        width: 380px;
-        height: 380px;
-      }
-
-      .logo-shell::after {
-        width: 320px;
-        height: 320px;
-      }
-
-      .manifesto {
-        max-width: 92%;
-      }
-    }
-
-    @media (max-width: 640px) {
-      * {
-        cursor: auto;
-      }
-
-      .cursor-dot,
-      .cursor-ring {
-        display: none;
-      }
-
-      .hero {
-        padding: 24px 14px;
-      }
-
-      .top-line {
-        top: 6vh;
-      }
-
-      .bottom-line {
-        bottom: 6vh;
-      }
-
-      .eyebrow {
-        margin-bottom: 16px;
+      .topline {
+        font-size: 0.68rem;
         letter-spacing: 0.28em;
       }
 
-      .logo-shell {
-        margin-bottom: 18px;
+      .wordmark {
+        letter-spacing: 0.16em;
       }
 
-      .logo {
-        width: min(345px, 84vw);
+      .subtitle {
+        max-width: 92%;
       }
 
-      .logo-shell::before {
-        width: 300px;
-        height: 300px;
+      .tagline {
+        letter-spacing: 0.18em;
+        line-height: 1.6;
       }
 
-      .logo-shell::after {
-        width: 255px;
-        height: 255px;
+      .description {
+        max-width: 92%;
       }
 
-      .divider {
-        margin: 20px auto 24px auto;
-      }
-
-      .manifesto {
-        margin-top: 34px;
-        line-height: 1.75;
-      }
-
-      .signature {
-        margin-top: 34px;
-        letter-spacing: 0.26em;
-      }
-
-      .bottom-mark {
-        bottom: 14px;
-        font-size: 9px;
+      .btn {
+        min-width: 160px;
+        width: 100%;
+        max-width: 280px;
       }
     }
   </style>
 </head>
-
 <body>
-  <div class="preloader">
-    <div class="preloader-mark">AKWAN Cie</div>
-  </div>
+  <main class="wrap">
+    <div class="topline">Europe / 2026 / Private Structure</div>
 
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring"></div>
-
-  <div class="noise"></div>
-  <div class="orb-1"></div>
-  <div class="orb-2"></div>
-  <div class="orb-3"></div>
-
-  <div class="top-line"></div>
-  <div class="bottom-line"></div>
-  <div class="left-line"></div>
-  <div class="right-line"></div>
-
-  <main class="hero">
-    <section class="content">
-      <div class="center-glow"></div>
-
-      <p class="eyebrow">Europe / 2026 / Private Structure</p>
-
-      <div class="logo-shell">
-        <img src="logo-akwan.jpg" alt="AKWAN logo" class="logo" />
+    <section class="hero">
+      <div class="logo-frame">
+        <!-- Replace logo-akwan.jpg with your real file name -->
+        <img src="logo-akwan.jpg" alt="AKWAN Cie logo" />
       </div>
 
-      <h1 class="title-reveal">
-        <span>A</span><span>K</span><span>W</span><span>A</span><span>N</span><span>&nbsp;</span><span>C</span><span>I</span><span>E</span>
-      </h1>
-
-      <div class="divider"></div>
+      <h1 class="wordmark">AKWAN CIE</h1>
 
       <p class="subtitle">
         Strategic investment, selective brand vision and high-value project development.
       </p>
 
-      <p class="location">
-        Designed to shape what stands next.
+      <p class="tagline">Designed to shape what stands next.</p>
+
+      <p class="description">
+        AKWAN Cie enters Europe with a deliberate posture: to structure vision, elevate assets and
+        develop exceptional initiatives with clarity, discretion and enduring ambition. Built for
+        disciplined growth, rare positioning and long-range value creation.
       </p>
 
-      <p class="manifesto">
-        AKWAN Cie enters Europe with a deliberate posture:
-        to structure vision, elevate assets and develop exceptional initiatives with clarity,
-        discretion and enduring ambition.
-        Built for disciplined growth, rare positioning and long-range value creation.
-      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="mailto:contact@akwan-cie.com">Contact</a>
+        <a class="btn btn-secondary" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
 
-      <p class="signature">
-        Quiet power / rare direction / lasting intent
-      </p>
+      <div class="footer-note">Private holding structure</div>
     </section>
   </main>
-
-  <script>
-    const dot = document.querySelector('.cursor-dot');
-    const ring = document.querySelector('.cursor-ring');
-
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let ringX = mouseX;
-    let ringY = mouseY;
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.left = mouseX + 'px';
-      dot.style.top = mouseY + 'px';
-    });
-
-    function animateRing() {
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      requestAnimationFrame(animateRing);
-    }
-
-    animateRing();
-  </script>
 </body>
-
 </html>

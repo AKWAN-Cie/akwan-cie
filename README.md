@@ -1,7 +1,25 @@
 # AKWAN Cie
 
-Strategic investment and project development company.
+AKWAN Cie is a private holding structure focused on strategic investment, selective brand vision and high-value project development.
 
-Europe — 2026
+## Positioning
 
-A new chapter begins.
+AKWAN Cie operates with a disciplined approach built around:
+
+- strategic investment
+- long-range value creation
+- selective project development
+- brand and asset structuring
+- confidential, high-standard positioning
+
+## Vision
+
+Designed to shape what stands next.
+
+## Website
+
+Official website: [akwan-cie.com](https://akwan-cie.com)
+
+## Contact
+
+contact@akwan-cie.com

@@ -6,9 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AKWAN Cie</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
+    :root {
+      --bg-1: #020202;
+      --bg-2: #070707;
+      --bg-3: #0c0c0c;
+      --white: #ffffff;
+      --soft-white: rgba(255, 255, 255, 0.82);
+      --muted-white: rgba(255, 255, 255, 0.56);
+      --faint-white: rgba(255, 255, 255, 0.22);
+      --line: rgba(255, 255, 255, 0.08);
+      --glow: rgba(255, 255, 255, 0.18);
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -18,190 +30,468 @@
       margin: 0;
       padding: 0;
       min-height: 100%;
+      background: #000;
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      color: #ffffff;
+      color: var(--white);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+      opacity: 0;
+      animation: pageReveal 1.8s ease forwards;
       background:
-        radial-gradient(circle at top, rgba(120, 120, 120, 0.10), transparent 35%),
-        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.04), transparent 25%),
-        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.03), transparent 25%),
-        linear-gradient(180deg, #050505 0%, #0b0b0b 45%, #040404 100%);
+        radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.12), transparent 18%),
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.035), transparent 25%),
+        radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.03), transparent 20%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.05;
+      z-index: 1;
+      background-image:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.35) 0.5px, transparent 0.8px),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.25) 0.5px, transparent 0.8px);
+      background-size: 24px 24px, 31px 31px;
+      mix-blend-mode: soft-light;
+    }
+
+    .orb-main {
+      position: absolute;
+      width: 1000px;
+      height: 1000px;
+      left: 50%;
+      top: 42%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: 0;
+      background: radial-gradient(circle,
+          rgba(255, 255, 255, 0.12) 0%,
+          rgba(255, 255, 255, 0.065) 18%,
+          rgba(255, 255, 255, 0.025) 35%,
+          rgba(255, 255, 255, 0.0) 62%);
+      filter: blur(42px);
+      animation: pulseOrb 7s ease-in-out infinite;
+    }
+
+    .orb-secondary {
+      position: absolute;
+      width: 650px;
+      height: 650px;
+      left: 50%;
+      top: 53%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: 0;
+      background: radial-gradient(circle,
+          rgba(255, 255, 255, 0.08) 0%,
+          rgba(255, 255, 255, 0.035) 28%,
+          rgba(255, 255, 255, 0) 68%);
+      filter: blur(28px);
+      animation: pulseOrbSoft 6s ease-in-out infinite;
+    }
+
+    .frame-lines::before,
+    .frame-lines::after {
+      content: "";
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(88vw, 1100px);
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,0.04) 15%,
+        rgba(255,255,255,0.14) 50%,
+        rgba(255,255,255,0.04) 85%,
+        transparent 100%
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .frame-lines::before {
+      top: 10vh;
+    }
+
+    .frame-lines::after {
+      bottom: 10vh;
+    }
+
+    .vertical-lines::before,
+    .vertical-lines::after {
+      content: "";
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: min(72vh, 760px);
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255,255,255,0.04) 15%,
+        rgba(255,255,255,0.12) 50%,
+        rgba(255,255,255,0.04) 85%,
+        transparent 100%
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .vertical-lines::before {
+      left: 8vw;
+    }
+
+    .vertical-lines::after {
+      right: 8vw;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 3;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      overflow: hidden;
-      opacity: 0;
-      animation: pageFade 1.8s ease forwards;
+      padding: 40px 24px;
     }
 
-    .background-glow {
-      position: absolute;
-      width: 900px;
-      height: 900px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 22%, rgba(255, 255, 255, 0.00) 60%);
-      filter: blur(40px);
-      z-index: 0;
-      animation: glowPulse 6s ease-in-out infinite;
-    }
-
-    .container {
+    .content {
       position: relative;
-      z-index: 1;
-      width: min(92%, 980px);
+      width: min(94vw, 1180px);
       text-align: center;
-      padding: 40px 20px;
     }
 
-    .text-glow {
+    .content-glow {
       position: absolute;
       left: 50%;
-      top: 58%;
+      top: 50%;
+      width: min(80vw, 900px);
+      height: 420px;
       transform: translate(-50%, -50%);
-      width: 720px;
-      height: 320px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 28%, rgba(255, 255, 255, 0.00) 70%);
-      filter: blur(30px);
+      border-radius: 50%;
+      background: radial-gradient(circle,
+          rgba(255, 255, 255, 0.10) 0%,
+          rgba(255, 255, 255, 0.045) 30%,
+          rgba(255, 255, 255, 0) 72%);
+      filter: blur(34px);
       z-index: -1;
-      pointer-events: none;
-      animation: textGlowPulse 5s ease-in-out infinite;
+      animation: textGlow 5.5s ease-in-out infinite;
+    }
+
+    .eyebrow {
+      margin: 0 0 26px 0;
+      font-size: 12px;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.42);
+      font-weight: 500;
+    }
+
+    .logo-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .logo-wrap::before {
+      content: "";
+      position: absolute;
+      width: 460px;
+      height: 460px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+          rgba(255, 255, 255, 0.14) 0%,
+          rgba(255, 255, 255, 0.06) 24%,
+          rgba(255, 255, 255, 0.015) 42%,
+          rgba(255, 255, 255, 0) 70%);
+      filter: blur(18px);
+      animation: haloRotate 12s linear infinite, haloPulse 5s ease-in-out infinite;
+      z-index: -1;
     }
 
     .logo {
-      width: min(320px, 65vw);
-      max-width: 320px;
-      min-width: 180px;
+      width: min(430px, 78vw);
+      max-width: 430px;
+      min-width: 220px;
       height: auto;
-      margin: 0 auto 34px auto;
       display: block;
-      filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.10));
-      animation: logoFloat 4.2s ease-in-out infinite;
+      filter:
+        drop-shadow(0 0 18px rgba(255,255,255,0.14))
+        drop-shadow(0 0 42px rgba(255,255,255,0.08));
+      animation: logoFloat 4.8s ease-in-out infinite;
     }
 
     h1 {
-      margin: 0 0 22px 0;
-      font-size: clamp(42px, 7vw, 74px);
-      letter-spacing: 0.18em;
-      font-weight: 700;
+      margin: 0;
+      font-size: clamp(46px, 8vw, 106px);
+      font-weight: 800;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      text-shadow: 0 0 18px rgba(255, 255, 255, 0.10);
+      line-height: 0.98;
+      text-shadow:
+        0 0 16px rgba(255,255,255,0.08),
+        0 0 46px rgba(255,255,255,0.06);
+    }
+
+    .divider {
+      width: min(180px, 36vw);
+      height: 1px;
+      margin: 26px auto 30px auto;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,0.16) 50%,
+        transparent 100%
+      );
     }
 
     .subtitle {
-      margin: 0;
-      font-size: clamp(18px, 2vw, 28px);
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: clamp(18px, 2vw, 30px);
       font-weight: 400;
-      line-height: 1.5;
-      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.55;
+      color: var(--soft-white);
     }
 
     .location {
-      margin: 22px 0 0 0;
-      font-size: clamp(16px, 1.6vw, 22px);
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.62);
-      letter-spacing: 0.03em;
-    }
-
-    .footer {
-      margin: 64px 0 0 0;
-      font-size: 14px;
+      margin: 24px 0 0 0;
+      font-size: clamp(15px, 1.5vw, 21px);
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.38);
+      color: var(--muted-white);
+      font-weight: 500;
     }
 
-    @keyframes pageFade {
+    .manifesto {
+      margin: 54px auto 0 auto;
+      max-width: 820px;
+      font-size: clamp(13px, 1.15vw, 16px);
+      line-height: 1.9;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.34);
+    }
+
+    .tagline {
+      margin: 48px 0 0 0;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.40);
+    }
+
+    .bottom-mark {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      z-index: 4;
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.22);
+      pointer-events: none;
+    }
+
+    @keyframes pageReveal {
       from {
         opacity: 0;
+        transform: scale(1.01);
       }
       to {
         opacity: 1;
+        transform: scale(1);
       }
     }
 
     @keyframes logoFloat {
-      0%,
-      100% {
+      0%, 100% {
         transform: translateY(0px) scale(1);
       }
       50% {
-        transform: translateY(-8px) scale(1.015);
+        transform: translateY(-10px) scale(1.018);
       }
     }
 
-    @keyframes glowPulse {
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: 0.9;
+    @keyframes pulseOrb {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.95;
       }
       50% {
-        transform: scale(1.06);
+        transform: translate(-50%, -50%) scale(1.06);
         opacity: 1;
       }
     }
 
-    @keyframes textGlowPulse {
-      0%,
-      100% {
-        opacity: 0.85;
+    @keyframes pulseOrbSoft {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.04);
+        opacity: 1;
+      }
+    }
+
+    @keyframes textGlow {
+      0%, 100% {
+        opacity: 0.88;
         transform: translate(-50%, -50%) scale(1);
       }
       50% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.04);
+        transform: translate(-50%, -50%) scale(1.045);
       }
     }
 
-    @media (max-width: 768px) {
-      .container {
-        padding: 24px 16px;
+    @keyframes haloRotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes haloPulse {
+      0%, 100% {
+        opacity: 0.86;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .frame-lines::before {
+        top: 7vh;
+      }
+
+      .frame-lines::after {
+        bottom: 7vh;
+      }
+
+      .vertical-lines::before,
+      .vertical-lines::after {
+        display: none;
+      }
+
+      .logo-wrap::before {
+        width: 320px;
+        height: 320px;
+      }
+
+      .manifesto {
+        max-width: 92%;
+        line-height: 1.75;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 28px 16px;
+      }
+
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.26em;
+        margin-bottom: 18px;
       }
 
       .logo {
-        width: min(250px, 72vw);
-        margin-bottom: 28px;
+        width: min(320px, 80vw);
       }
 
-      .text-glow {
-        width: 92vw;
-        height: 260px;
+      .logo-wrap {
+        margin-bottom: 20px;
       }
 
-      .footer {
-        margin-top: 48px;
+      .divider {
+        margin: 20px auto 24px auto;
+      }
+
+      .subtitle {
+        font-size: 18px;
+      }
+
+      .location {
+        margin-top: 18px;
+      }
+
+      .manifesto {
+        margin-top: 34px;
         font-size: 12px;
+      }
+
+      .tagline {
+        margin-top: 34px;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+      }
+
+      .bottom-mark {
+        font-size: 10px;
+        bottom: 16px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="background-glow"></div>
+  <div class="noise"></div>
+  <div class="orb-main"></div>
+  <div class="orb-secondary"></div>
+  <div class="frame-lines"></div>
+  <div class="vertical-lines"></div>
 
-  <main class="container">
-    <div class="text-glow"></div>
+  <main class="hero">
+    <section class="content">
+      <div class="content-glow"></div>
 
-    <img src="logo-akwan.jpg" alt="AKWAN logo" class="logo" />
+      <p class="eyebrow">Europe / 2026</p>
 
-    <h1>AKWAN Cie</h1>
+      <div class="logo-wrap">
+        <img src="logo-akwan.jpg" alt="AKWAN logo" class="logo" />
+      </div>
 
-    <p class="subtitle">
-      Strategic investment and project development company
-    </p>
+      <h1>AKWAN Cie</h1>
 
-    <p class="location">
-      Europe — 2026
-    </p>
+      <div class="divider"></div>
 
-    <p class="footer">
-      A new chapter begins.
-    </p>
+      <p class="subtitle">
+        Strategic investment, brand vision and project development.
+      </p>
+
+      <p class="location">
+        Built to structure what comes next.
+      </p>
+
+      <p class="manifesto">
+        A company shaped by vision, discretion and long-range ambition.
+        AKWAN Cie enters Europe with a singular direction:
+        to build, structure and elevate high-potential initiatives across sectors,
+        with discipline, clarity and lasting intent.
+      </p>
+
+      <p class="tagline">
+        Quiet power / deliberate growth / selective execution
+      </p>
+    </section>
   </main>
+
+  <div class="bottom-mark">AKWAN CIE</div>
 </body>
 
 </html>

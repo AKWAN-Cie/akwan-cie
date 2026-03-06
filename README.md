@@ -1,4 +1,4 @@
-# AKWAN CIE
+# AKWAN Cie
 
 Strategic investment and project development company.
 

@@ -2,87 +2,206 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AKWAN Cie</title>
 
-<title>AKWAN Cie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
 
-body{
-background:#0b0b0b;
-color:white;
-font-family:'Inter', sans-serif;
-text-align:center;
-margin:0;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-height:100vh;
-opacity:0;
-animation:fadeIn 2s forwards;
-}
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #ffffff;
+      background:
+        radial-gradient(circle at top, rgba(120, 120, 120, 0.10), transparent 35%),
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.04), transparent 25%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.03), transparent 25%),
+        linear-gradient(180deg, #050505 0%, #0b0b0b 45%, #040404 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      opacity: 0;
+      animation: pageFade 1.8s ease forwards;
+    }
 
-.logo{
-width:140px;
-margin-bottom:40px;
-}
+    .background-glow {
+      position: absolute;
+      width: 900px;
+      height: 900px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 22%, rgba(255, 255, 255, 0.00) 60%);
+      filter: blur(40px);
+      z-index: 0;
+      animation: glowPulse 6s ease-in-out infinite;
+    }
 
-h1{
-font-size:56px;
-letter-spacing:8px;
-font-weight:600;
-margin-bottom:30px;
-}
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(92%, 980px);
+      text-align: center;
+      padding: 40px 20px;
+    }
 
-.subtitle{
-font-size:20px;
-color:#bfbfbf;
-margin-bottom:20px;
-}
+    .text-glow {
+      position: absolute;
+      left: 50%;
+      top: 58%;
+      transform: translate(-50%, -50%);
+      width: 720px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 28%, rgba(255, 255, 255, 0.00) 70%);
+      filter: blur(30px);
+      z-index: -1;
+      pointer-events: none;
+      animation: textGlowPulse 5s ease-in-out infinite;
+    }
 
-.location{
-font-size:18px;
-color:#9a9a9a;
-}
+    .logo {
+      width: min(320px, 65vw);
+      max-width: 320px;
+      min-width: 180px;
+      height: auto;
+      margin: 0 auto 34px auto;
+      display: block;
+      filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.10));
+      animation: logoFloat 4.2s ease-in-out infinite;
+    }
 
-.footer{
-margin-top:80px;
-font-size:14px;
-color:#666;
-}
+    h1 {
+      margin: 0 0 22px 0;
+      font-size: clamp(42px, 7vw, 74px);
+      letter-spacing: 0.18em;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.10);
+    }
 
-@keyframes fadeIn{
-to{
-opacity:1;
-}
-}
+    .subtitle {
+      margin: 0;
+      font-size: clamp(18px, 2vw, 28px);
+      font-weight: 400;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.78);
+    }
 
-</style>
+    .location {
+      margin: 22px 0 0 0;
+      font-size: clamp(16px, 1.6vw, 22px);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.62);
+      letter-spacing: 0.03em;
+    }
 
+    .footer {
+      margin: 64px 0 0 0;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.38);
+    }
+
+    @keyframes pageFade {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes logoFloat {
+      0%,
+      100% {
+        transform: translateY(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-8px) scale(1.015);
+      }
+    }
+
+    @keyframes glowPulse {
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: scale(1.06);
+        opacity: 1;
+      }
+    }
+
+    @keyframes textGlowPulse {
+      0%,
+      100% {
+        opacity: 0.85;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.04);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 24px 16px;
+      }
+
+      .logo {
+        width: min(250px, 72vw);
+        margin-bottom: 28px;
+      }
+
+      .text-glow {
+        width: 92vw;
+        height: 260px;
+      }
+
+      .footer {
+        margin-top: 48px;
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="background-glow"></div>
 
-<img src="logo-akwan.jpg" class="logo">
+  <main class="container">
+    <div class="text-glow"></div>
 
-<h1>AKWAN Cie</h1>
+    <img src="logo-akwan.png" alt="AKWAN logo" class="logo" />
 
-<p class="subtitle">
-Strategic investment and project development company
-</p>
+    <h1>AKWAN Cie</h1>
 
-<p class="location">
-Europe — 2026
-</p>
+    <p class="subtitle">
+      Strategic investment and project development company
+    </p>
 
-<p class="footer">
-A new chapter begins.
-</p>
+    <p class="location">
+      Europe — 2026
+    </p>
 
+    <p class="footer">
+      A new chapter begins.
+    </p>
+  </main>
 </body>
 
 </html>
